@@ -1,4 +1,4 @@
-# 🚨 JWTuê - Desafio de Segurança JWT
+<img width="1240" height="393" alt="image" src="https://github.com/user-attachments/assets/20ada158-4620-432f-a9d6-42bb402734df" />
 
 ## 🎯 O Desafio
 
