@@ -101,7 +101,7 @@ curl -X POST http://localhost:3001/api/login \
 
 O token retornado é um JWT. Vamos decodificá-lo para entender sua estrutura:
 
-Usei i site jwt.io
+Use o site https://jwt.io ou sua ferramenta favorita para decode/encode de jwt.
 
 ### 🔎 O que Procurar
 
@@ -117,14 +117,14 @@ Analise o token procurando por:
 Agora vamos tentar criar um token falsificado com role de admin:
 
 ```bash
-# Criar payload com role admin
-PAYLOAD='{"userId":1,"username":"user","role":"admin","iat":1752705422,"exp":1752709022}'
-
-# Codificar em base64
-echo -n $PAYLOAD | base64
-
-# Criar token falsificado (header.payload.signature_falsa)
-echo "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.$(echo -n $PAYLOAD | base64).falsified_signature"
+# Alterar as claims do JWT sem se importar com a assinatura
+{
+  "userId": 2,
+  "username": "user", // tente trocar por admin
+  "role": "user",
+  "iat": 1752710992,
+  "exp": 1752714592
+}
 ```
 
 ### Teste de Acesso Não Autorizado
@@ -147,11 +147,6 @@ curl -X GET http://localhost:3001/api/songs \
 <details>
   <summary>Dica Nível 2: Qual é a diferença entre os métodos?</summary>
   Compare `jwt.decode()` com `jwt.verify()`. O primeiro apenas decodifica o token, enquanto o segundo verifica tanto a estrutura quanto a assinatura digital usando a chave secreta.
-</details>
-
-<details>
-  <summary>Dica Nível 3: Por que a assinatura é importante?</summary>
-  A assinatura JWT garante que o token não foi modificado. Sem verificação da assinatura, qualquer pessoa pode criar tokens válidos com qualquer payload, incluindo roles elevados.
 </details>
 
 ## ✅ Soluções Possíveis
@@ -209,37 +204,6 @@ curl -X GET http://localhost:3001/api/songs \
 - Segurança em camadas
 
 </details>
-
-## 🎯 Próximos Passos
-
-1. Experimente diferentes payloads de token
-2. Teste com diferentes algoritmos de assinatura
-3. Analise como a vulnerabilidade se comporta com tokens expirados
-4. Implemente as correções sem quebrar o funcionamento da API
-5. Compare o comportamento antes e depois da correção
-6. **Desafio Extra**: Implemente rate limiting e rotação de chaves
-
-## 🔧 Ferramentas Úteis
-
-### Decodificação JWT
-
-```bash
-# Decodificar token online
-echo "SEU_TOKEN" | cut -d'.' -f2 | base64 -d
-
-# Usar jwt.io para análise visual
-# https://jwt.io/
-```
-
-### Criação de Tokens Falsificados
-
-```bash
-# Gerar payload base64
-echo -n '{"role":"admin"}' | base64
-
-# Criar token manualmente
-echo "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.PAYLOAD_BASE64.SIGNATURE"
-```
 
 ## ⚠️ Aviso Importante
 
