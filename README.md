@@ -220,7 +220,4 @@ curl -X GET http://localhost:3001/api/songs \
 
 Contribuições são bem-vindas! Se você encontrou uma nova técnica de exploração ou tem sugestões de melhorias, abra uma issue ou pull request.
 
-## 📄 Licença
-
-Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
+> Este desafio é um presente para o [@00lucasm](https://github.com/00lucasm) em retribuição as talks dele sobre vulnerabilidades em JWT. Acompanhem os conteúdo do jovem que vale a pena.
